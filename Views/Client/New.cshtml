@@ -1,0 +1,52 @@
+﻿@model MvcDemo.ViewModel.ClientVm
+
+@{
+    ViewData["Title"] = "Add New Client's";
+    string item;
+    if(TempData["exception"] != null)
+    {
+        item = "ture";
+    }
+    else
+    {
+        item = "false";
+    }
+}
+
+<form asp-action="New" asp-controller="Client" method="Post">
+
+    <div asp-validation-summary="All"></div>
+
+    <input asp-for="ClientId" type="hidden"/>
+    <input asp-for="ClientId" type="hidden"/>
+
+    <div class="form-group">
+        <label asp-for="ClientName"></label>
+        <input asp-for="ClientName" class="form-control"/>
+        <span asp-validation-for="ClientName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Address"></label>
+        <input asp-for="Address" class="form-control"/>
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Product"></label>
+        <input asp-for="Product" class="form-control"/>
+        <span asp-validation-for="Product" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ClientDate"></label>
+        <input asp-for="ClientDate" class="form-control"/>
+        <span asp-validation-for="ClientDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary"/>
+    </div>
+
+    <div class="alert alert-danger" role="alert" hidden="@item">
+        <p>Some things went Wrong</p> <code>@TempData["exception"]</code>
+    </div>
+</form>

@@ -1,0 +1,46 @@
+﻿@model MvcDemo.ViewModel.ClientVm
+@{
+    ViewData["Title"]= "Client's";
+}
+
+<h2>All Client from database</h2>
+@if (Model.ClientId <= 0)
+{
+    <div style="text-align: center; margin-top: auto" >
+        <img src="img/Loading.gif"style="height: 180px"/>
+    </div>
+}
+else
+{
+    <form asp-action="Index" method="POST">
+        <div class="row input-group">
+            <input type="text" name="search" id="search" class="form-control"/>
+            <div class="input-group-btn">
+                <input type="submit" class="btn btn-primary" value="Search"/>
+            </div>
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <td>ClientId</td>
+            <td>Name</td>
+            <td>Address</td>
+            <td>ClientDate</td>
+            <td>Product</td>  
+
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+}
