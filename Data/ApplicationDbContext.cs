@@ -10,6 +10,6 @@ namespace MvcDemo.Data
         {
         }
 
-        public DbSet<Client> Clients { get; }
+        public DbSet<Client> Clients { get; set;}
     }
 }
