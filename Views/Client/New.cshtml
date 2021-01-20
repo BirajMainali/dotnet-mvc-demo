@@ -37,7 +37,8 @@
         <input type="submit" value="Submit" class="btn btn-primary"/>
     </div>
 
-    <div class="alert alert-danger" role="alert">
-        <p>@TempData["success"]</p>
-    </div>
+   @if (TempData["Success"] != null)
+    {
+ <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
+    }
 </form>
