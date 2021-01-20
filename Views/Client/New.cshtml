@@ -2,15 +2,6 @@
 
 @{
     ViewData["Title"] = "Add New Client's";
-    string item;
-    if(TempData["exception"] != null)
-    {
-        item = "ture";
-    }
-    else
-    {
-        item = "false";
-    }
 }
 
 <form asp-action="New" asp-controller="Client" method="Post">
@@ -47,6 +38,6 @@
     </div>
 
     <div class="alert alert-danger" role="alert" hidden="@item">
-        <p>Some things went Wrong</p> <code>@TempData["exception"]</code>
+        <p>TempData["success"]</p>
     </div>
 </form>
