@@ -40,14 +40,14 @@
    @if (TempData["success"] != null)
     {
 <div class="alert alert-sucess alert-dismissible fade show" role="alert">
-  <strong>TempData["success"]</strong>
+  <strong>@TempData["success"]</strong>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
     }
       @if (TempData["exception"] != null)
     {
  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-  <strong>TempData["exception"]</strong>
+  <strong>@TempData["exception"]</strong>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
     }
