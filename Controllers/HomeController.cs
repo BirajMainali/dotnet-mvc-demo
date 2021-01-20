@@ -20,7 +20,7 @@ namespace MvcDemo.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("/Client/index");
         }
 
         public IActionResult Privacy()
