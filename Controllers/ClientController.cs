@@ -21,18 +21,19 @@ namespace MvcDemo.Controllers
             var client = new ClientVm();
             return View(client);
         }
+
+        [HttpPost]
         public async Task<IActionResult> New(ClientVm clientVm)
         {
             try
             {
-                throw new AppDomainUnloadedException();
-                using (var txn = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                if(!ModelState.IsValid)
                 {
-                    await _clientServices.Create(clientVm);
-                    txn.Complete();
+                    return View(clientVm);
                 }
-             
-                return View(clientVm);
+                await _clientServices.Create(clientVm);          
+                TempData["success"] = "Client Created";
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
@@ -41,10 +42,9 @@ namespace MvcDemo.Controllers
             }
             
         }
-        [HttpPost]
         public IActionResult New()
         {
-            return View();
+            return View(new ClientVm());
         }
     }
 }
