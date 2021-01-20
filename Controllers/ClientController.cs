@@ -29,7 +29,7 @@ namespace MvcDemo.Controllers
         [HttpPost]
         public IActionResult Index(SearchVm searchVm)
         {
-            var search = _context.Clients.Where(x => x.Address.ToLower() == searchVm.ClientAddress.ToLower()).ToList();
+            var search = _context.Clients.Where(x => x.Address.ToLower().Contains(searchVm.ClientAddress.ToLower())).ToList();
             return View(search);
         }
 
