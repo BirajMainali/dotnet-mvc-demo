@@ -4,11 +4,13 @@
 }
 
 <h2>All Client from database</h2>
+<hr/>
 @if (Model.ClientId <= 0)
 {
-    <div style="text-align: center; margin-top: auto" >
-        <img src="img/Loading.gif"style="height: 180px"/>
-    </div>
+   <button class="btn btn-primary" type="button" disabled>
+  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  Fetching...
+</button>
 }
 else
 {
