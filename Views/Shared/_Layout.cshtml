@@ -11,7 +11,7 @@
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
-            <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Index">Details</a>
+            <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Index">Index</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -30,6 +30,25 @@
 <div class="container">
     <main role="main" class="pb-3">
         @RenderBody()
+            
+   @if (TempData["success"] != null)
+    {
+<div class="alert alert-success alert-dismissible fade show  align-items-right col" role="alert">
+  <strong>Good Job !</strong> @TempData["success"]
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+    }
+      @if (TempData["exception"] != null)
+    {
+ <div class="alert alert-danger alert-dismissible fade show align-items-right col" role="alert">
+  <strong>Error !</strong>@TempData["exception"]
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+    }`
     </main>
 </div>
 
@@ -47,5 +66,6 @@
 <style>
 body {
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: medium;
 }
 </style>

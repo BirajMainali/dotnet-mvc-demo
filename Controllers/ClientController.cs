@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.AspNetCore.Mvc;
+using MvcDemo.Data;
 using MvcDemo.Services.Interfaces;
 using MvcDemo.ViewModel;
 
@@ -10,16 +12,19 @@ namespace MvcDemo.Controllers
     public class ClientController : Controller
     {
         private readonly IClientServices _clientServices;
+        private readonly ApplicationDbContext _context;
 
-        public ClientController(IClientServices clientServices)
+        public ClientController(IClientServices clientServices, ApplicationDbContext context)
         {
             _clientServices = clientServices;
+            _context = context;
         }
         [HttpGet]
         public IActionResult Index()
         {
-            var client = new ClientVm();
-            return View(client);
+            // var clients = _context.Clients.Where(x => x.Address=="jhapa").ToList();
+            var clients = _context.Clients.ToList();
+            return View(clients);
         }
 
         [HttpPost]
@@ -33,7 +38,7 @@ namespace MvcDemo.Controllers
                 }
                 await _clientServices.Create(clientVm);          
                 TempData["success"] = "Successfully client has been Added";
-                return RedirectToAction(nameof(New));
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
