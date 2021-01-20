@@ -41,4 +41,8 @@
     {
  <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
     }
+      @if (TempData["exception"] != null)
+    {
+ <p class="alert alert-danger" id="successMessage">@TempData["exception"]</p>
+    }
 </form>
