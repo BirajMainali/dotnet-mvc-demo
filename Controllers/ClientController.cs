@@ -32,7 +32,7 @@ namespace MvcDemo.Controllers
                     return View(clientVm);
                 }
                 await _clientServices.Create(clientVm);          
-                TempData["success"] = "Sucessfully clinet has beenn Added";
+                TempData["success"] = "Successfully client has been Added";
                 return RedirectToAction(nameof(New));
             }
             catch (Exception ex)
