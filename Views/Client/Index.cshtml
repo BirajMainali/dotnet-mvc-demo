@@ -1,51 +1,46 @@
 ﻿@model List<Client>
 @{
-    ViewData["Title"]= "Client's";
+    ViewData["Title"] = "Client's";
 }
 
 <h2>All Client from database</h2>
 <hr/>
 @if (Model.Count <= 0)
 {
-   <button class="btn btn-primary" type="button" disabled>
-  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-  Fetching...
-</button>
+    <h3 class="text-center">No data available !!</h3>
 }
 else
 {
-    <form asp-action="Index" method="POST">
-        <div class="row input-group">
-            <input type="text" name="search" id="search" class="form-control"/>
+    <form asp-action="Index" asp-controller="Client" method="POST">
+        <div class="input-group">
+            <input type="text" name="ClientAddress" id="search" class="form-control" required autocomplete="off"/>
             <div class="input-group-btn">
                 <input type="submit" class="btn btn-primary" value="Search"/>
             </div>
         </div>
     </form>
-
     <table class="table">
         <thead>
         <tr>
-            <td>ClientId</td>
+            <td>Id</td>
             <td>Name</td>
             <td>Address</td>
             <td>ClientDate</td>
-            <td>Product</td>  
+            <td>Product</td>
 
         </tr>
         </thead>
         <tbody>
-@foreach (var client in Model)
-{
- 
-        <tr>
-            <td>@client.ClientId</td>
-            <td>@client.ClientName</td>
-            <td>@client.Address</td>
-            <td>@client.ClientDate</td>
-            <td>@client.Product</td>
-        </tr>   
-}
+        @foreach (var client in Model)
+        {
+            <tr>
+                <td>@client.Id</td>
+                <td>@client.ClientName</td>
+                <td>@client.Address</td>
+                <td>@client.ClientDate</td>
+                <td>@client.Product</td>
+            </tr>
+        }
         </tbody>
     </table>
 }

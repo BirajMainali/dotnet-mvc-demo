@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Transactions;
 using Microsoft.AspNetCore.Mvc;
 using MvcDemo.Data;
 using MvcDemo.Services.Interfaces;
@@ -19,12 +18,19 @@ namespace MvcDemo.Controllers
             _clientServices = clientServices;
             _context = context;
         }
+
         [HttpGet]
         public IActionResult Index()
         {
-            // var clients = _context.Clients.Where(x => x.Address=="jhapa").ToList();
             var clients = _context.Clients.ToList();
             return View(clients);
+        }
+
+        [HttpPost]
+        public IActionResult Index(SearchVm searchVm)
+        {
+            var search = _context.Clients.Where(x => x.Address == searchVm.ClientAddress.ToLower()).ToList();
+            return View(search);
         }
 
         [HttpPost]
@@ -32,21 +38,18 @@ namespace MvcDemo.Controllers
         {
             try
             {
-                if(!ModelState.IsValid)
-                {
-                    return View(clientVm);
-                }
-                await _clientServices.Create(clientVm);          
+                if (!ModelState.IsValid) return View(clientVm);
+                await _clientServices.Create(clientVm);
                 TempData["success"] = "Successfully client has been Added";
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
                 TempData["exception"] = ex.Message;
-                return View(clientVm); 
+                return View(clientVm);
             }
-            
         }
+
         public IActionResult New()
         {
             return View(new ClientVm());

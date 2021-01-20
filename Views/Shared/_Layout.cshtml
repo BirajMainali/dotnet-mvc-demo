@@ -30,25 +30,7 @@
 <div class="container">
     <main role="main" class="pb-3">
         @RenderBody()
-            
-   @if (TempData["success"] != null)
-    {
-<div class="alert alert-success alert-dismissible fade show  align-items-right col" role="alert">
-  <strong>Good Job !</strong> @TempData["success"]
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-    }
-      @if (TempData["exception"] != null)
-    {
- <div class="alert alert-danger alert-dismissible fade show align-items-right col" role="alert">
-  <strong>Error !</strong>@TempData["exception"]
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-    }`
+        @await Html.PartialAsync("_message")
     </main>
 </div>
 
