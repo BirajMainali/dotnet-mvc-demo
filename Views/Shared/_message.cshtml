@@ -1,6 +1,6 @@
 ﻿@if (TempData["success"] != null)
 {
-    <div class="alert alert-success alert-dismissible fade show  align-items-right col" role="alert">
+    <div class="alert alert-success alert-dismissible fade show col-md-6 offset-md-6 col-sm-6" role="alert">
         <strong>Good Job !</strong> @TempData["success"]
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -9,11 +9,10 @@
 }
 @if (TempData["exception"] != null)
 {
-    <div class="alert alert-danger alert-dismissible fade show align-items-right col" role="alert">
+    <div class="alert alert-danger alert-dismissible fade show col-md-6 offset-md-6 col-sm-6" role="alert">
         <strong>Error !</strong>@TempData["exception"]
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
 }
-`

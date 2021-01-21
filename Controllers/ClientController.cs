@@ -18,19 +18,24 @@ namespace MvcDemo.Controllers
             _clientServices = clientServices;
             _context = context;
         }
-
-        [HttpGet]
-        public IActionResult Index()
-        {
-            var clients = _context.Clients.ToList();
-            return View(clients);
-        }
-
-        [HttpPost]
+        
         public IActionResult Index(SearchVm searchVm)
         {
-            var search = _context.Clients.Where(x => x.Address.ToLower().Contains(searchVm.ClientAddress.ToLower())).ToList();
-            return View(search);
+            try
+            {
+                var clients = _context.Clients.ToList();
+                if (!string.IsNullOrEmpty(searchVm.ClientAddress) || !string.IsNullOrWhiteSpace(searchVm.ClientAddress))
+                {
+                    clients = _context.Clients.Where(x => x.Address.ToLower().Contains(searchVm.ClientAddress.ToLower())).ToList();
+                }
+                return View(clients);
+            }
+            catch (Exception ex)
+            {
+                TempData["exception"] = ex.Message;
+                return View();
+
+            }
         }
 
         [HttpPost]
@@ -47,12 +52,20 @@ namespace MvcDemo.Controllers
             {
                 TempData["exception"] = ex.Message;
                 return View(clientVm);
-            }
+            }   
         }
 
         public IActionResult New()
         {
-            return View(new ClientVm());
+            try
+            {
+                return View(new ClientVm());
+            }
+            catch (Exception ex)
+            {
+                TempData["exception"] = ex.Message;
+                return View(new ClientVm());
+            }
         }
     }
 }
