@@ -24,7 +24,7 @@ namespace MvcDemo.Services
             var client = new Client
             {
                 ClientName = dto.ClientName,
-                Address = dto.Address.ToLower(),
+                Address = dto.Address,
                 Product = dto.Product,
                 RecDate = DateTime.Now,
                 ClientDate = dto.ClientDate
