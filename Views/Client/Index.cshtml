@@ -5,21 +5,20 @@
 
 <h2>All Client from database</h2>
 <hr/>
-    <form asp-action="Index" asp-controller="Client" method="GET">
-        <div class="input-group">
-            <input type="text" name="ClientAddress" id="search" class="form-control" autocomplete="off"/>
-            <div class="input-group-btn">
-                <input type="submit" class="btn btn-primary" value="Search"/>
-            </div>
+<form asp-action="Index" asp-controller="Client" method="GET">
+    <div class="input-group">
+        <input type="text" name="ClientAddress" id="search" class="form-control" autocomplete="off"/>
+        <div class="input-group-btn">
+            <input type="submit" class="btn btn-primary" value="Search"/>
         </div>
-    </form>
+    </div>
+</form>
 @if (Model.Count <= 0)
 {
     <h3 class="text-center">No data available !!</h3>
 }
 else
 {
-
     <table class="table">
         <thead>
         <tr>
@@ -28,7 +27,7 @@ else
             <td>Address</td>
             <td>ClientDate</td>
             <td>Product</td>
-
+            <td>Action</td>
         </tr>
         </thead>
         <tbody>
@@ -40,6 +39,11 @@ else
                 <td>@client.Address</td>
                 <td>@client.ClientDate</td>
                 <td>@client.Product</td>
+                <td>
+                    <a asp-action="Update" asp-route-id="@client.Id" class="btn btn-sm btn-info">
+                        <span class="fa fa-pencil"></span>Update
+                    </a>
+                </td>
             </tr>
         }
         </tbody>

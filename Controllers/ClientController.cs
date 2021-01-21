@@ -2,7 +2,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MvcDemo.Data;
+using MvcDemo.Dto;
+using MvcDemo.Models;
+using MvcDemo.Repository.Interfaces;
 using MvcDemo.Services.Interfaces;
 using MvcDemo.ViewModel;
 
@@ -11,30 +15,44 @@ namespace MvcDemo.Controllers
     public class ClientController : Controller
     {
         private readonly IClientServices _clientServices;
-        private readonly ApplicationDbContext _context;
+        private readonly IClientRepository _clientRepo;
 
-        public ClientController(IClientServices clientServices, ApplicationDbContext context)
+        public ClientController(IClientServices clientServices, IClientRepository clientRepo)
         {
             _clientServices = clientServices;
-            _context = context;
+            _clientRepo = clientRepo;
         }
-        
-        public IActionResult Index(SearchVm searchVm)
+
+        public async Task<IActionResult> Index(SearchVm searchVm)
         {
             try
             {
-                var clients = _context.Clients.ToList();
+                var clientQueryable = _clientRepo.GetQueryable();
                 if (!string.IsNullOrEmpty(searchVm.ClientAddress) || !string.IsNullOrWhiteSpace(searchVm.ClientAddress))
                 {
-                    clients = _context.Clients.Where(x => x.Address.ToLower().Contains(searchVm.ClientAddress.ToLower())).ToList();
+                    clientQueryable = clientQueryable.Where(
+                        x => x.Address.ToLower().Contains(searchVm.ClientAddress.ToLower()));
                 }
-                return View(clients);
+
+                return View(await clientQueryable.ToListAsync());
             }
             catch (Exception ex)
             {
                 TempData["exception"] = ex.Message;
                 return View();
+            }
+        }
 
+        public IActionResult New()
+        {
+            try
+            {
+                return View(new ClientVm());
+            }
+            catch (Exception ex)
+            {
+                TempData["exception"] = ex.Message;
+                return View(new ClientVm());
             }
         }
 
@@ -52,19 +70,58 @@ namespace MvcDemo.Controllers
             {
                 TempData["exception"] = ex.Message;
                 return View(clientVm);
-            }   
+            }
         }
 
-        public IActionResult New()
+        public async Task<IActionResult> Update(long id)
         {
             try
             {
-                return View(new ClientVm());
+                var client = await _clientRepo.FindOrThrow(id);
+                var clientEditVm = new ClientUpdateVm()
+                {
+                    Client = client,
+                    Address = client.Address,
+                    Product = client.Product,
+                    ClientDate = client.ClientDate,
+                    ClientName = client.ClientName
+                };
+                return View(clientEditVm);
             }
             catch (Exception ex)
             {
                 TempData["exception"] = ex.Message;
-                return View(new ClientVm());
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(long id, ClientUpdateVm vm)
+        {
+            try
+            {
+                var client = await _clientRepo.FindOrThrow(id);
+                if (!ModelState.IsValid)
+                {
+                    vm.Client = client;
+                    return View(vm); //Render Form
+                }
+
+                var updateDto = new ClientUpdateDto()
+                {
+                    Address = vm.Address,
+                    Product = vm.Product,
+                    ClientDate = vm.ClientDate,
+                    ClientName = vm.ClientName
+                };
+                await _clientServices.Update(client, updateDto);
+                TempData["success"] = $"Client #{id} updated";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["exception"] = ex.Message;
+                return RedirectToAction(nameof(Index));
             }
         }
     }

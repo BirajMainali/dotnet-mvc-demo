@@ -2,7 +2,9 @@
 using System.Threading.Tasks;
 using System.Transactions;
 using MvcDemo.Data;
+using MvcDemo.Dto;
 using MvcDemo.Models;
+using MvcDemo.Repository.Interfaces;
 using MvcDemo.Services.Interfaces;
 using MvcDemo.ViewModel;
 
@@ -11,11 +13,11 @@ namespace MvcDemo.Services
     public class ClientServices : IClientServices
 
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IClientRepository _clientRepo;
 
-        public ClientServices(ApplicationDbContext context)
+        public ClientServices(IClientRepository clientRepo)
         {
-            _context = context;
+            _clientRepo = clientRepo;
         }
 
         public async Task Create(ClientVm dto)
@@ -29,9 +31,29 @@ namespace MvcDemo.Services
                 RecDate = DateTime.Now,
                 ClientDate = dto.ClientDate
             };
-            await _context.Clients.AddAsync(client);
-            await _context.SaveChangesAsync();
+            await _clientRepo.Create(client);
+            await _clientRepo.Flush();
             txn.Complete();
+        }
+
+        public async Task Update(Client client, ClientUpdateDto dto)
+        {
+            using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+            client.Address = dto.Address;
+            client.Product = dto.Product;
+            client.ClientDate = dto.ClientDate;
+            client.ClientName = dto.ClientName;
+            _clientRepo.Update(client);
+            await _clientRepo.Flush();
+            tx.Complete();
+        }
+
+        public async Task Delete(Client client)
+        {
+            using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+            await _clientRepo.Remove(client);
+            await _clientRepo.Flush();
+            tx.Complete();
         }
     }
 }
