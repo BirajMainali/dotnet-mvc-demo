@@ -39,9 +39,12 @@ else
                 <td>@client.Address</td>
                 <td>@client.ClientDate</td>
                 <td>@client.Product</td>
-                <td>
+                <td class="btn-group">
                     <a asp-action="Update" asp-route-id="@client.Id" class="btn btn-sm btn-info">
                         <span class="fa fa-pencil"></span>Update
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@client.Id" class="btn btn-danger btn-sm">
+                        <span class="fa fa-trash"></span> Delete
                     </a>
                 </td>
             </tr>

@@ -124,5 +124,21 @@ namespace MvcDemo.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
+        
+        public async Task<IActionResult> Delete(long id)
+        {
+            try
+            {
+                var client = await _clientRepo.FindOrThrow(id);
+                await _clientServices.Delete(client);
+                TempData["success"] = "Client deleted.";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                TempData["exception"] = e.Message;
+                return RedirectToAction(nameof(Index));
+            }
+        }
     }
 }
