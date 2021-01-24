@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MvcDemo.Models
 {
@@ -14,5 +15,7 @@ namespace MvcDemo.Models
         public DateTime RecDate { get; set; }
 
         public string ClientDate { get; set; }
+
+        public List<ClientLog> ClientLogs { get; set; } = new List<ClientLog>(); //One to many //One client has many client logs
     }
 }

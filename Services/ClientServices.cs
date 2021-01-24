@@ -31,6 +31,13 @@ namespace MvcDemo.Services
                 RecDate = DateTime.Now,
                 ClientDate = dto.ClientDate
             };
+            client.ClientLogs.Add(new ClientLog()
+            {
+                Action = "Created",
+                Client = client,
+                Date = DateTime.Now,
+                ActionBy = "Self"
+            });
             await _clientRepo.Create(client);
             await _clientRepo.Flush();
             txn.Complete();
@@ -43,6 +50,13 @@ namespace MvcDemo.Services
             client.Product = dto.Product;
             client.ClientDate = dto.ClientDate;
             client.ClientName = dto.ClientName;
+            client.ClientLogs.Add(new ClientLog()
+            {
+                Action = "Client updated. Name Updated",
+                Client = client,
+                Date = DateTime.Now,
+                ActionBy = "Self"
+            });
             _clientRepo.Update(client);
             await _clientRepo.Flush();
             tx.Complete();
