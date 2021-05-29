@@ -16,6 +16,8 @@ namespace MvcDemo.Models
 
         public string ClientDate { get; set; }
 
-        public List<ClientLog> ClientLogs { get; set; } = new List<ClientLog>(); //One to many //One client has many client logs
+        public List<ClientLog> ClientLog { get; set; } = new List<ClientLog>();
+
+        public long ClientLogId { get; set; }
     }
 }

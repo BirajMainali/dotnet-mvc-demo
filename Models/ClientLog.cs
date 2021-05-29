@@ -14,12 +14,3 @@ namespace MvcDemo.Models
         public long ClientId { get; set; }
     }
 }
-
-public class Product
-{
-    public ProductCategory Category { get; set; }
-}
-
-public class ProductCategory
-{
-}

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MvcDemo.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -9,9 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MvcDemo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210529145700_stuff")]
+    partial class stuff
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -230,9 +232,6 @@ namespace MvcDemo.Migrations
                     b.Property<string>("ClientDate")
                         .HasColumnType("text");
 
-                    b.Property<long>("ClientLogId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("ClientName")
                         .HasColumnType("text");
 
@@ -330,7 +329,7 @@ namespace MvcDemo.Migrations
             modelBuilder.Entity("MvcDemo.Models.ClientLog", b =>
                 {
                     b.HasOne("MvcDemo.Models.Client", "Client")
-                        .WithMany("ClientLog")
+                        .WithMany("ClientLogs")
                         .HasForeignKey("ClientId1");
 
                     b.Navigation("Client");
@@ -338,7 +337,7 @@ namespace MvcDemo.Migrations
 
             modelBuilder.Entity("MvcDemo.Models.Client", b =>
                 {
-                    b.Navigation("ClientLog");
+                    b.Navigation("ClientLogs");
                 });
 #pragma warning restore 612, 618
         }

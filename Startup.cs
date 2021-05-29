@@ -65,8 +65,8 @@ namespace MvcDemo
             {
                 endpoints.MapControllerRoute(
                     name: "MyArea",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}").RequireAuthorization();
-                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}").RequireAuthorization();
+                    pattern: "{area:exists}/{controller=Client}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller=Client}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

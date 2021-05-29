@@ -69,7 +69,7 @@ namespace MvcDemo.Controllers
             catch (Exception ex)
             {
                 TempData["exception"] = ex.Message;
-                return View(clientVm);
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -78,7 +78,7 @@ namespace MvcDemo.Controllers
             try
             {
                 var client = await _clientRepo.FindOrThrow(id);
-                var clientEditVm = new ClientUpdateVm()
+                var vm = new ClientUpdateVm
                 {
                     Client = client,
                     Address = client.Address,
@@ -86,7 +86,7 @@ namespace MvcDemo.Controllers
                     ClientDate = client.ClientDate,
                     ClientName = client.ClientName
                 };
-                return View(clientEditVm);
+                return View(vm);
             }
             catch (Exception ex)
             {
@@ -104,17 +104,17 @@ namespace MvcDemo.Controllers
                 if (!ModelState.IsValid)
                 {
                     vm.Client = client;
-                    return View(vm); //Render Form
+                    return View(vm); 
                 }
 
-                var updateDto = new ClientUpdateDto()
+                var dto = new ClientUpdateDto()
                 {
                     Address = vm.Address,
                     Product = vm.Product,
                     ClientDate = vm.ClientDate,
                     ClientName = vm.ClientName
                 };
-                await _clientServices.Update(client, updateDto);
+                await _clientServices.Update(client, dto);
                 TempData["success"] = $"Client #{id} updated";
                 return RedirectToAction(nameof(Index));
             }
@@ -124,7 +124,7 @@ namespace MvcDemo.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
-        
+
         public async Task<IActionResult> Delete(long id)
         {
             try
